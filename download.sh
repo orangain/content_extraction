@@ -23,4 +23,4 @@ wget -O html/en_github.com.html https://github.com/blog/2093-how-the-services-te
 # blogger
 wget -O html/en_googleblog.blogspot.jp.html https://googleblog.blogspot.jp/2015/12/icymi-few-stocking-stuffers-from-around.html
 # blogger + splash (192.168.59.103 is a docker host where splash is running)
-wget -O html/en_googleblog.blogspot.jp.splash.html 'http://192.168.59.103:8050/render.html?url=https://googleblog.blogspot.jp/2015/12/icymi-few-stocking-stuffers-from-around.html'
+#wget -O html/en_googleblog.blogspot.jp.splash.html 'http://192.168.59.103:8050/render.html?url=https://googleblog.blogspot.jp/2015/12/icymi-few-stocking-stuffers-from-around.html'
