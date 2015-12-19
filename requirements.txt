@@ -1,0 +1,5 @@
+-e git+https://github.com/yono/python-extractcontent#egg=extractcontent
+dragnet
+eatiht
+goose-extractor
+readability-lxml
