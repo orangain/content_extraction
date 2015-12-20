@@ -27,8 +27,12 @@ def main():
     paths = glob('html/*.html')
 
     for path in paths:
-        with open(path) as f:
-            html = f.read()
+        try:
+            with open(path, encoding='utf-8') as f:
+                html = f.read()
+        except UnicodeDecodeError:
+            with open(path, encoding='cp932') as f:
+                html = f.read()
 
         assert isinstance(html, unicode), type(html)
 
