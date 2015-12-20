@@ -4,6 +4,7 @@ from __future__ import unicode_literals, print_function
 
 import os
 import re
+import time
 import HTMLParser
 from glob import glob
 from io import open, BytesIO
@@ -23,6 +24,7 @@ def main():
         ('goose', extract_by_goose),
         ('readability', extract_by_readability),
     )
+    clocks = {}
 
     paths = glob('html/*.html')
 
@@ -42,10 +44,16 @@ def main():
         print(common_title)
 
         for extractor_name, extractor in extractors:
+            begin = time.clock()
+
             try:
                 content = extractor(html)
             except Exception:
                 content = {'body': '!!UNHANDLED EXCEPTION!!'}
+
+            end = time.clock()
+            elapsed = end - begin
+            clocks.setdefault(extractor_name, []).append(elapsed)
 
             if 'title' not in content:
                 content['title'] = common_title
@@ -62,6 +70,21 @@ def main():
                 f.write(content['title'])
                 f.write('\n\n')
                 f.write(content['body'])
+
+    table = []
+    for extractor_name, _ in extractors:
+        col = [extractor_name]
+        col.append('---------')
+        col.extend('{0:f}'.format(value) for value in clocks[extractor_name])
+        col.append('---------')
+        col.append(sum(clocks[extractor_name]))
+        table.append(col)
+
+    print('')
+    for row in zip(*table):
+        for value in row:
+            print('{0:<15}'.format(value), end='')
+        print('')
 
 
 def extract_by_dragnet(html):
