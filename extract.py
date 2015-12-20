@@ -42,7 +42,10 @@ def main():
         print(common_title)
 
         for extractor_name, extractor in extractors:
-            content = extractor(html)
+            try:
+                content = extractor(html)
+            except Exception:
+                content = {'body': '!!UNHANDLED EXCEPTION!!'}
 
             if 'title' not in content:
                 content['title'] = common_title
