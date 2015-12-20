@@ -97,10 +97,13 @@ def extract_by_extractcontent(html):
 
 def extract_by_goose(html):
     g = Goose()
-    article = g.extract(raw_html=html)
+    try:
+        article = g.extract(raw_html=html)
+    except IndexError:
+        return {'body': '!!ERROR!!'}
 
     return {
-        'title': article.title,
+        'title': ensure_unicode(article.title),
         'body': article.cleaned_text,
     }
 
